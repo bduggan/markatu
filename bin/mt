@@ -1,0 +1,19 @@
+#!/usr/bin/env perl6
+
+use lib $?FILE.IO.parent.parent.child("lib");
+use Node;
+use Markatu::Grammar;
+use Markatu::Actions;
+
+sub MAIN($file,Bool :$p, :$rule='TOP') {
+  my $g = Markatu::Grammar.new;
+  my $actions = Markatu::Actions.new;
+  my $text = $file.IO.lines.join("\n");
+  chdir $file.IO.dirname;
+  if $p {
+    exit note $g.parse($text, :$rule);
+  }
+  my $match = $g.parse(:$actions, $text, :$rule) or die "Failed to parse.";
+  my $made = $match.made or die "nothing made";
+  say $made.render;
+}

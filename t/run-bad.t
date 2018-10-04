@@ -1,0 +1,2 @@
+{
+   +OUTPUT nothun.p6
