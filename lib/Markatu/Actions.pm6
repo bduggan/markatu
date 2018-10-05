@@ -52,6 +52,7 @@ class Markatu::Actions {
           :class($code-class),
           :inline;
     }
+
     method output($/) {
       $/.make: Node.new: :tag<pre>, :text((escape runit "$/").trim), :class($output-class), :inline;
     }
