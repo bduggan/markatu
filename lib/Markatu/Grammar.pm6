@@ -61,11 +61,16 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
   regex p {
     [ <line>+ % "\n" ]
   }
+  token quoted {
+    | [ '"' <( <-["]>+ )> '"' ]
+    | <( \w+ )>
+  }
   token label {
     [
       $<tag>=[\w+]
       ['#' $<id>=\w+ ]?
       ['.' <class-list>]?
+      [ '[' [ $<key>=<.quoted> '=' $<val>=<.quoted> ]+ % ',' ']' ]?
       [ '(' ~ ')' $<declare-variable>=\w+]?
       [ |'.'<{ fail "extra . in tag name" }> ]?
     ] |
@@ -74,6 +79,7 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
       $<tag>=[\w+]
       ['#' $<id>=\w+ ]?
       ['.' <class-list>]?
+      [ '[' [ $<key>=<.quoted> '=' $<val>=<.quoted> ]+ % ',' ']' ]?
     ]
   }
   rule tag {

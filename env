@@ -1,0 +1,3 @@
+base=`pwd`
+export PATH=$base/bin:$PATH
+export PERL6LIB=$base/markatu/lib

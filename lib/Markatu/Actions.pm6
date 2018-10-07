@@ -73,6 +73,11 @@ class Markatu::Actions {
       %h<tag> = ~$<tag>;
       %h<class> = .made with $<class-list>;
       %h<attrs><id> = ~$_ with $<id>;
+      with $<key> -> $k {
+        my @keys = $<key>.map(~*);
+        my @vals = $<val>.map(~*);
+        %h<attrs>{@keys} = @vals;
+      }
       %h;
     }
     method class-list($/) {
