@@ -28,7 +28,7 @@ class Markatu::Actions {
            children => $<block>.map: { .made }
     }
     method block($/) {
-        my $what = .made with $<p> // $<include-code> // $<include>
+        my $what = .made with $<p> // $<bare> // $<include-code> // $<include>
            // $<output> // $<tag> // $<codefence> // $<hr> // $<anchor> // $<list-element>;
         die "parser error: unknown blocktype for '$/'" without $what;
         $/.make: $what;
@@ -68,6 +68,9 @@ class Markatu::Actions {
     method p($/) {
       $/.make: Node.new: :tag<p>, :text($<line>.map({.made}).join("\n"))
     }
+    method bare($/) {
+      $/.make: Node.new: :text($<bareline>.map({.made}).join("\n"))
+    }
     method parse-label($/) {
       my %h;
       %h<tag> = ~$<tag>;
@@ -100,11 +103,12 @@ class Markatu::Actions {
       $/.make: $node;
     }
     method line($/) {
-      my $made = '';
-      for ($<phrase> Z=> $<h>) {
-        $made ~= .key.made ~ .value
-      }
-      $/.make: Node.new: text => $made;
+      $/.make: Node.new: text =>
+         ($<phrase> Z=> $<h>).map( { .key.made ~ .value }).join;
+    }
+    method bareline($/) {
+      $/.make: Node.new: text =>
+         ($<phrase> Z=> $<h>).map( { .key.made ~ .value }).join;
     }
     method phrase($/) {
       return $/.make(.made) with $<link>;

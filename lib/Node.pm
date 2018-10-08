@@ -9,7 +9,7 @@ class Node {
     method Str { self.render }
     method attr-string {
       return '' unless %.attrs;
-      return (join '', %.attrs.map: -> (:$key,:$value) { qq[ $key="$value"] });
+      return (join '', %.attrs.sort.map: -> (:$key,:$value) { qq[ $key="$value"] });
     }
     method start-tag($indent) {
       return '' unless $.tag;

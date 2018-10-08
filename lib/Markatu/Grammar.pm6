@@ -24,6 +24,7 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
         || <codefence>
         || <tag>
         || <p>
+        || <bare>
         || <hr>
         || <list-element>
         || <anchor>
@@ -59,7 +60,10 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
     \h*'+OUTPUT ' <( <.filename> )>
   }
   regex p {
-    [ <line>+ % "\n" ]
+    <line>+ % "\n"
+  }
+  regex bare {
+    <bareline>+ % "\n"
   }
   token quoted {
     | [ '"' <( <-["]>+ )> '"' ]
@@ -95,6 +99,10 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
   regex line {
      ^^ \h* <?before \w> [ <phrase>+ %% <h> ] $$
   }
+  regex bareline {
+     ^^ \h* '| ' [ <phrase>+ %% <h> ] $$
+  }
+
   regex phrase {
    <bold> || <code> || <link> || \S+
   }
