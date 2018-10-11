@@ -26,9 +26,12 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
         || <p>
         || <bare>
         || <hr>
-        || <list-element>
+        || <list>
         || <anchor>
     ]
+  }
+  regex list {
+    <list-element>+ % "\n"
   }
   token class-list { 
     <[\w] + [-] + [,]>+
@@ -123,8 +126,8 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
   token hr {
     ^^ '--' \h*
   }
-  token list-element {
-    ^^ \h* '*' \h+ [ <phrase>+ %% <h> ] $$
+  regex list-element {:s
+    ^^ \h* '*'\h+[ <phrase>+ %% <h> ] $$
   }
   token link {
     '<'

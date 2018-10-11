@@ -35,9 +35,12 @@ class Markatu::Actions {
     }
     method block($/) {
         my $what = .made with $<p> // $<bare> // $<include-code> // $<include>
-           // $<output> // $<tag> // $<codefence> // $<hr> // $<anchor> // $<list-element>;
+           // $<output> // $<tag> // $<codefence> // $<hr> // $<anchor> // $<list>;
         die "parser error: unknown blocktype for '$/'" without $what;
         $/.make: $what;
+    }
+    method list($/) {
+      $/.make: Node.new: children => $<list-element>.map: *.made
     }
 
     method range($/) {

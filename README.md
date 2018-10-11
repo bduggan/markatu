@@ -1,9 +1,6 @@
-Markatu
--------
+# Markatu: another lightweight markup language
 
 [![Build Status](https://travis-ci.org/bduggan/markatu.svg?branch=master)](https://travis-ci.org/bduggan/markatu)
-
-This is markatu, a lightweight markup language.
 
 Quick example:
 
@@ -44,6 +41,9 @@ html {
 
 For the full set of features take a look at the test suite
 here: https://github.com/bduggan/markatu/tree/master/t
+
+## INSTALLATION
+
 
 Current status: works for me, but highly unstable and experimental
 
