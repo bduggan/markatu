@@ -40,7 +40,7 @@ html {
 ```
 
 For the full set of features take a look at the test suite
-here: https://github.com/bduggan/markatu/tree/master/t
+here: https://github.com/bduggan/markatu/tree/master/t/mt
 
 ## INSTALLATION
 
