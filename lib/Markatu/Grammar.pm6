@@ -106,7 +106,10 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
   }
 
   regex phrase {
-   <bold> || <code> || <link> || \S+
+   <bold> || <code> || <link> || <underline> || \S+
+  }
+  token underline {
+    '_' <( <-[_]>+ )> '_'
   }
   token bold {
     '*' <( <-[*]>+ )> '*'

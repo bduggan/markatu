@@ -119,6 +119,7 @@ class Markatu::Actions {
     method phrase($/) {
       return $/.make(.made) with $<link>;
       return $/.make: Node.new: :tag<b>, :text("$_"), :inline with $<bold>;
+      return $/.make: Node.new: :tag<u>, :text("$_"), :inline with $<underline>;
       return $/.make: Node.new: :tag<code>, :text(escape "$_"), :inline with $<code>;
       $/.make: Node.new: :text("$/");
     }
