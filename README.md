@@ -22,13 +22,13 @@ html {
     This is still markatu.
  
     ul {
-
-    * This is a list
-
-    * of
-
-    * things
-
+      * This is a list
+      * of
+      * things
+      li {
+        This list item
+        goes on and on
+     }
     }
 
     +INCLUDE example_file.txt
@@ -43,6 +43,7 @@ For the full set of features take a look at the test suite
 here: https://github.com/bduggan/markatu/tree/master/t
 
 ## INSTALLATION
+
 
 
 Current status: works for me, but highly unstable and experimental
