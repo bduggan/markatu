@@ -39,9 +39,11 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
       \n
       <( [
           | <-[`]>
+          | [ '\\' '`' ]
           | '`'<-[`]>
           | '``'<-[`]>
-         ]+? )>\n
+         ]+?
+      )>\n
       $<indentation>=\h*'```'$$
   }
   rule range {
@@ -51,13 +53,13 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
     \h*'+CODE ' <( \w+ ".p6" )> <range>?$$
   }
   rule include {
-    \h*'+INCLUDE ' <( \S+ )>
+    \h*'+INCLUDE ' <( \S+ )> <range>? $$
   }
   token filename {
     \w <[\w] + [-] + [.]>*
   }
   rule output {
-    \h*'+OUTPUT ' <( <.filename> )>
+    \h*'+OUTPUT ' <( \V+ )>
   }
   regex p {
     <line>+ % "\n"

@@ -5,7 +5,8 @@ class Markatu::Actions {
     my $output-class = 'w3-black w3-round w3-padding';
     has %.vars;
     sub escape($str) {
-      $str.subst('&','&amp;', :g)
+      $str.subst(/ '\\`'/, '`', :g)
+          .subst('&','&amp;', :g)
           .subst('>','&gt;', :g)
           .subst('<','&lt;', :g)
           .subst('"','&quot;', :g)
@@ -16,8 +17,13 @@ class Markatu::Actions {
     my %ran;
     sub runit($cmd) {
         return %ran{ $cmd } if %ran{ $cmd }:exists;
-        note "running perl6 $cmd";
-        %ran{ $cmd } = qqx[perl6 $cmd];
+        if $cmd.ends-with('.p6') {
+          note "running perl6 $cmd";
+          %ran{ $cmd } = qqx[perl6 $cmd];
+        } else {
+          note "running '$cmd'";
+          %ran{ $cmd } = qqx[$cmd];
+        }
         %ran{ $cmd };
     }
     method TOP($/) {
@@ -132,7 +138,13 @@ class Markatu::Actions {
       $/.make: Node.new: :tag<a>, attrs => :name("$/");
     }
     method include($/) {
-      $/.make: Node.new: :tag<pre>, :text(escape "$/".IO.slurp.trim), :inline;
+      my $file = "$/".trim;
+      my $text = $file.IO.slurp;
+      with $<range> {
+        $text = $text.lines[.made].join("\n");
+      }
+      $text = escape $text;
+      $/.make: Node.new: :tag<pre>, :$text, :inline;
     }
 
     method list-element($/) {
