@@ -44,10 +44,17 @@ here: https://github.com/bduggan/markatu/tree/master/t/mt
 
 ## INSTALLATION
 
+1. Install [Perl 6](https://perl6.org) and [zef](https://github.com/ugexe/zef)
+2. zef install Terminal::ANSIColor
+3. Clone this repo, add `bin/` to your PATH and `lib/` to your PERL6LIB
+4. Done.  Run `mt` to convert `.mt` files to HTML.
 
+## Status
 
 Current status: works for me, but highly unstable and experimental
 
-Contributions welcome!
+## See Also
 
-See also:  https://blog.matatu.org/markatu
+https://blog.matatu.org/markatu
+
+Contributions welcome!
