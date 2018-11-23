@@ -108,12 +108,14 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
      ^^ \h* '| ' [ <phrase>+ %% <h> ] $$
   }
 
-  regex phrase {
+  token phrase {
    <bold> || <code> || <link> || <underline> || \S+
   }
+
   token underline {
     '_' <( <-[_]>+ )> '_'
   }
+
   token bold {
     '*' <( <-[*]>+ )> '*'
   }
