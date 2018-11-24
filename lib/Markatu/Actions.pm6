@@ -127,13 +127,22 @@ class Markatu::Actions {
       $/.make: Node.new: :text("$/");
     }
     method link($/) {
-      my $href = ~$<href>;
-      $href = "http://$href" unless
-         $href.contains('://') || $href.starts-with('#') || $href.starts-with('^');
-      $href = '#' ~ $href.substr(1) if $href.starts-with('^');
-      my %attrs = :$href;
-      %attrs<target> = 'blank' if $href.contains('://');
-      $/.make: Node.new: :tag<a>, :text(~$<linktext>), :%attrs, :inline;
+      given ("$<linktext>") {
+          when 'img' {
+            my $src = ~$<href>;
+            my %attrs = :$src;
+            $/.make: Node.new: :tag<img>, :%attrs, :inline;
+          }
+          default {
+            my $href = ~$<href>;
+            $href = "http://$href" unless
+               $href.contains('://') || $href.starts-with('#') || $href.starts-with('^');
+            $href = '#' ~ $href.substr(1) if $href.starts-with('^');
+            my %attrs = :$href;
+            %attrs<target> = 'blank' if $href.contains('://');
+            $/.make: Node.new: :tag<a>, :text(~$<linktext>), :%attrs, :inline;
+          }
+      }
     }
     method hr($/) {
       $/.make: Node.new: :tag<hr>, :collapse;
