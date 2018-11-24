@@ -1,0 +1,3 @@
+div {
+  <img:foo.jpg>
+}
