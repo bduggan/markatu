@@ -126,21 +126,22 @@ class Markatu::Actions {
       return $/.make: Node.new: :tag<code>, :text(escape "$_"), :inline with $<code>;
       $/.make: Node.new: :text("$/");
     }
-    method link($/) {
-      given ("$<linktext>") {
-          when 'img' {
-            my $src = ~$<href>;
+    method link($m) {
+      given ("$m<linktext>") { 
+          when /^ 'img' ['.' $<class>=[.*] ]? $/ {
+            my $src = ~$m<href>;
             my %attrs = :$src;
-            $/.make: Node.new: :tag<img>, :%attrs, :inline;
+            %attrs<class> = "$_" with $<class>;
+            $m.make: Node.new: :tag<img>, :%attrs, :inline;
           }
           default {
-            my $href = ~$<href>;
+            my $href = ~$m<href>;
             $href = "http://$href" unless
                $href.contains('://') || $href.starts-with('#') || $href.starts-with('^');
             $href = '#' ~ $href.substr(1) if $href.starts-with('^');
             my %attrs = :$href;
             %attrs<target> = 'blank' if $href.contains('://');
-            $/.make: Node.new: :tag<a>, :text(~$<linktext>), :%attrs, :inline;
+            $m.make: Node.new: :tag<a>, :text($_), :%attrs, :inline;
           }
       }
     }

@@ -102,7 +102,7 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
   }
   token h { \h* }
   token line {
-     ^^ \h* <?before \w> [ <phrase>+ %% <h> ] $$
+     ^^ \h* <?before [\w|'<']> [ <phrase>+ %% <h> ] $$
   }
   regex bareline {
      ^^ \h* '| ' [ <phrase>+ %% <h> ] $$
