@@ -7,7 +7,8 @@ class Markatu::Cache {
          || $*HOME.child('.cache').add('markatu');
 
     method stored($k) {
-      $.cache-dir.IO.child("cache-$k");
+      my $id = join '', $k.comb.map: *.ord.base(36);
+      $.cache-dir.IO.child("cache-$id");
     }
 
     method TWEAK {

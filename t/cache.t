@@ -9,7 +9,13 @@ my $in  = q:to/X/;
   +OUTPUT hello.p6
   X
 
-%*ENV<MARKATU_CACHE_DIR> = $*TMPDIR.child(".markatu-cache-{$*PID}");
+my $tmpdir will leave -> $d {
+  say "removing $d";
+  .unlink for $d.IO.dir;
+  $d.rmdir;
+};
+$tmpdir = $*TMPDIR.child(".markatu-cache-{$*PID}");
+%*ENV<MARKATU_CACHE_DIR> = $tmpdir;
 
 my $g = Markatu::Grammar.new;
 my $actions = Markatu::Actions.new;
