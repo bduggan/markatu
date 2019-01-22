@@ -1,9 +1,43 @@
 use Node;
 
+class Markatu::Cache {
+    my %mem;
+    has $.cache-dir = %*ENV<MARKATU_CACHE_DIR>
+         || %*ENV<XDG_CACHE_HOME>
+         || $*HOME.child('.cache').add('markatu');
+
+    method stored($k) {
+      $.cache-dir.IO.child("cache-$k");
+    }
+
+    method TWEAK {
+      $.cache-dir.IO.e or mkdir $.cache-dir or die "can't make { $.cache-dir }";;
+    }
+    multi method find($key) {
+       return %mem{ $key } if %mem{ $key }:exists;
+       return Nil;
+    }
+    multi method find($key, Instant :$since!) {
+      .return with self.find($key);
+      my $file = self.stored($key);
+      return Nil unless $file.IO.e;
+      return $file.IO.slurp if $file.modified >= $since;
+      return Nil;
+    }
+    method add(Pair $p) {
+      %mem{ $p.key } = $p.value;
+      my $file = self.stored($p.key);
+      $file.spurt: $p.value;
+      return $p.value;
+    }
+}
+
 class Markatu::Actions {
     my $code-class = 'prettyprint skin-sunburst lang-perl6 linenums';
     my $output-class = 'w3-black w3-round w3-padding';
     has %.vars;
+    has $.cache = Markatu::Cache.new;
+
     sub escape($str) {
       $str.subst(/ '\\`'/, '`', :g)
           .subst('&','&amp;', :g)
@@ -14,17 +48,16 @@ class Markatu::Actions {
     sub touch-up($str) {
         $str.lines.grep({ $_ !~~ /'MONKEY'/ }).join("\n");
     }
-    my %ran;
-    sub runit($cmd) {
-        return %ran{ $cmd } if %ran{ $cmd }:exists;
+    method runit($cmd) {
+        my $value;
         if $cmd.ends-with('.p6') {
-          note "running perl6 $cmd";
-          %ran{ $cmd } = qqx[perl6 $cmd];
-        } else {
-          note "running '$cmd'";
-          %ran{ $cmd } = qqx[$cmd];
+          my $modified = $cmd.IO.modified;
+          .return with $.cache.find($cmd, :since($modified));
+          note "# running perl6 $cmd";
+          return $.cache.add: ($cmd => qqx[perl6 $cmd]);
         }
-        %ran{ $cmd };
+        note "# running '$cmd'";
+        return $.cache.add: ($cmd => qqx[$cmd]);
     }
     method TOP($/) {
       $/.make: $<blocks>.made
@@ -63,7 +96,10 @@ class Markatu::Actions {
     }
 
     method output($/) {
-      $/.make: Node.new: :tag<pre>, :text((escape runit "$/").trim), :class($output-class), :inline;
+      $/.make: Node.new:
+           :tag<pre>,
+           :text((escape self.runit("$/")).trim),
+           :class($output-class), :inline;
     }
     method codefence($/) {
       my $indent = "$<indentation>";
