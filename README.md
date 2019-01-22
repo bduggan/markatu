@@ -39,6 +39,14 @@ html {
 
 ```
 
+## Some features
+
+* Curly braces for blocks
+* macros for defining sets of classes
+* Include other files
+* Run code and show the results
+* Cache the output of code that was run
+
 For the full set of features take a look at the test suite
 here: https://github.com/bduggan/markatu/tree/master/t/mt
 
@@ -51,7 +59,7 @@ here: https://github.com/bduggan/markatu/tree/master/t/mt
 
 ## Status
 
-Current status: works for me, but highly unstable and experimental
+Current status: works for me, but highly unstable and experimental.
 
 ## See Also
 
