@@ -168,7 +168,7 @@ class Markatu::Actions {
           when /^ 'img' ['.' $<class>=[.*] ]? $/ {
             my $src = ~$m<href>;
             my %attrs = :$src;
-            %attrs<class> = "$_" with $<class>;
+            %attrs<class> = "$_".split('.') with $<class>;
             $m.make: Node.new: :tag<img>, :%attrs, :inline;
           }
           default {
