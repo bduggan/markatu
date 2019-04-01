@@ -1,6 +1,6 @@
 #!/usr/bin/env perl6
 
-use lib $?FILE.IO.parent.parent.child("lib");
+use lib $*PROGRAM.resolve.parent(2).add('lib');
 use Node;
 use Markatu::Grammar;
 use Markatu::Actions;
