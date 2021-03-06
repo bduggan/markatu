@@ -107,7 +107,7 @@ class Markatu::Actions {
       my $level = $indent.chars;
       my $class = .made with $<class-list>;
       $/.make: Node.new: :tag<pre>,
-           :text(escape (~$/).indent(-$level)),
+           :text(escape ("$/\n").indent(-$level)),
            |($class ?? :$class !! Empty),
            :inline;
     }
