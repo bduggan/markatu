@@ -106,10 +106,18 @@ class Markatu::Actions {
       my $indent = "$<indentation>";
       my $level = $indent.chars;
       my $class = .made with $<class-list>;
-      $/.make: Node.new: :tag<pre>,
-           :text(escape ("$/\n").indent(-$level)),
-           |($class ?? :$class !! Empty),
-           :inline;
+      note "verbatim is " ~ $<verbatim>.Str.raku;
+      if $<verbatim>.Str eq 'v' {
+        $/.make: Node.new: :tag<pre>,
+             :text(("$/\n").indent(-$level)),
+             |($class ?? :$class !! Empty),
+             :inline;
+      } else {
+        $/.make: Node.new: :tag<pre>,
+             :text(escape ("$/\n").indent(-$level)),
+             |($class ?? :$class !! Empty),
+             :inline;
+      }
     }
     method p($/) {
       $/.make: Node.new: :tag<p>, :text($<line>.map({.made}).join("\n"))

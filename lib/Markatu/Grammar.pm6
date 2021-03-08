@@ -37,7 +37,7 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
     <[\w] + [-] + [,]>+
   }
   regex codefence {:r
-      \h*'```'
+      \h*'```' $<verbatim>=[v]?
       [ '.' <class-list> ]?
       \n
       <( [
