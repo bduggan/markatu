@@ -109,7 +109,6 @@ class Markatu::Actions {
       my $indent = "$<indentation>";
       my $level = $indent.chars;
       my $class = .made with $<class-list>;
-      note "verbatim is " ~ $<verbatim>.Str.raku;
       if $<verbatim>.Str eq 'v' {
         $/.make: Node.new: :tag<pre>,
              :text(("$/\n").indent(-$level)),
