@@ -53,7 +53,7 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
     $<min>=\d+ '-' $<max>=\d+
   }
   rule include-code {
-    \h*'+CODE ' <( \w+ ".p6" )> <range>?$$
+    \h*'+CODE ' <( \w+ [ ".p6" | ".py" | ".rb" | ".pl" ] )> <range>?$$
   }
   rule include {
     \h*'+INCLUDE ' <( \S+ )> <range>? $$

@@ -33,6 +33,9 @@ class Markatu::Cache {
     }
 }
 
+my $code-class = 'w3-code w3-large';
+my $output-class = 'w3-black w3-round w3-padding';
+
 class Markatu::Actions {
     my $code-class = 'prettyprint skin-sunburst lang-perl6 linenums';
     my $output-class = 'w3-black w3-round w3-padding';
