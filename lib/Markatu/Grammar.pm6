@@ -33,7 +33,7 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
   regex list {
     <list-element>+ % "\n"
   }
-  token class-list { 
+  token class-list {
     <[\w] + [-] + [,]>+
   }
   regex codefence {:r
@@ -131,9 +131,21 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
   regex list-element {:s
     ^^ \h* '*'\h+[ <phrase>+ %% <h> ] $$
   }
+  regex esc {
+    '\\' <( ':' )>
+  }
+  regex char {
+    <-[:]>
+  }
+  token linktext {
+    [
+         <char=.esc> 
+      || <char>
+    ]+
+  }
   token link {
     '<'
-       $<linktext>=<-[:]>+ ':' $<href>=<-[>]>+
+       <linktext> ':' $<href>=<-[>]>+
     '>'
   }
 }

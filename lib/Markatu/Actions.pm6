@@ -173,8 +173,13 @@ class Markatu::Actions {
       return $/.make: Node.new: :tag<code>, :text(escape "$_"), :inline with $<code>;
       $/.make: Node.new: :text("$/");
     }
+    method linktext($/) {
+      $/.make: $<char>».made.join
+    }
+    method char($/) { $/.make: "$/" }
+    method esc($/) { $/.make: "$/" }
     method link($m) {
-      given ("$m<linktext>") { 
+      given ($m<linktext>.made) { 
           when /^ 'img' ['.' $<class>=[.*] ]? $/ {
             my $src = ~$m<href>;
             my %attrs = :$src;
