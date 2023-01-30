@@ -98,11 +98,17 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
       | '{' "\n"?
              [ <blocks> "\n"? ]+ % "\n"
         '}'
+      | '〈' "\n"?
+             [ <blocks> "\n"? ]+ % "\n"
+        '〉'
     ]
   }
   token h { \h* }
+  token starter {
+    \w | \d | '<' | '$' | '>' | '&' | '[' | '\\' | '(' | '---'
+  }
   token line {
-     ^^ \h* <?before [\w|'<']> [ <phrase>+ %% <h> ] $$
+     ^^ \h* <?before <starter>> [ <phrase>+ %% <h> ] $$
   }
   regex bareline {
      ^^ \h* '| ' [ <phrase>+ %% <h> ] $$
