@@ -105,7 +105,7 @@ grammar Markatu::Grammar does Grammar::PrettyErrors {
   }
   token h { \h* }
   token starter {
-    \w | \d | '<' | '$' | '>' | '&' | '[' | '\\' | '(' | '---'
+    \w | \d | '<' | '$' | '>' | '&' | '[' | '\\' | '(' | '---' | '#!'
   }
   token line {
      ^^ \h* <?before <starter>> [ <phrase>+ %% <h> ] $$
