@@ -1,5 +1,5 @@
-+CODE code.p6
++CODE code.raku
 
 foo
 
-+OUTPUT code.p6
++OUTPUT code.raku

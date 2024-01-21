@@ -1,7 +1,7 @@
-  +CODE code.p6
+  +CODE code.raku
 
   foo
 
   bar
 
-  +CODE code.p6
+  +CODE code.raku

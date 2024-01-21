@@ -1,4 +1,4 @@
-#!/usr/bin/env perl6
+#!/usr/bin/env raku
 
 use Markatu::Grammar;
 use Node;
@@ -6,7 +6,7 @@ use Markatu::Actions;
 use Test;
 
 my $in  = q:to/X/;
-  +OUTPUT hello.p6
+  +OUTPUT hello.raku
   X
 
 my $tmpdir will leave -> $d {
@@ -35,7 +35,7 @@ indir $?FILE.IO.sibling('mt'), {
 }
 
 is +@calls, 1, '1 call';
-is @calls[0], \"perl6 hello.p6", 'right call';
+is @calls[0], \"raku hello.raku", 'right call';
 
 done-testing;
 

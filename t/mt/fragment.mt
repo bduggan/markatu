@@ -1,1 +1,1 @@
-+CODE dom.p6 2-5
++CODE dom.raku 2-5

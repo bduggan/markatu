@@ -1,0 +1,23 @@
+{
+  "auth": "cpan:bduggan",
+  "authors": [
+    "Brian Duggan"
+  ],
+  "description": "Markatu Markup Language",
+  "name": "Markatu",
+  "license": "MIT",
+  "raku": "6.d",
+  "provides": {
+  },
+  "repo-type": "git",
+  "source-url": "",
+  "tags": [
+  ],
+  "depends" : [
+    "Grammar::PrettyErrors"
+  ],
+  "test-depends": [
+    "Test"
+  ],
+  "version": "0.0.1"
+}

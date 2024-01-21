@@ -5,6 +5,6 @@ div.w3-row {
    }
 
    div.w3-col,s6 {
-       +CODE first.p6
+       +CODE first.raku
    }
 }
